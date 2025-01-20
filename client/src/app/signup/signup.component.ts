@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -50,7 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   errorMessage = '';
   hidePassword = true;
   hideConfirmPassword = true;
@@ -133,7 +133,7 @@ export class SignupComponent {
   ) {}
 
   async valid_user(): Promise<boolean> {
-    let user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
     if (user.token) {
       try {
         await this.http

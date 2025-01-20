@@ -12,13 +12,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ChangeDetectorRef } from '@angular/core';
 
 import {
-  FormControl,
   Validators,
   FormsModule,
   FormBuilder,
   ReactiveFormsModule,
-  ValidatorFn,
-  AbstractControl,
   FormGroup,
 } from '@angular/forms';
 
@@ -78,7 +75,7 @@ export class HomeComponent implements OnInit {
     try {
       const response = await this.http.get(this.highscore_url).toPromise();
       if (response) {
-        this.highscores = <HighScore[]>response;
+        this.highscores = response as HighScore[];
         this.cdr.detectChanges();
       }
     } catch (error) {}
@@ -105,7 +102,7 @@ export class HomeComponent implements OnInit {
   }
 
   async valid_user(): Promise<boolean> {
-    let user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
     if (user.token) {
       try {
         await this.http

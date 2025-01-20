@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -38,7 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   navigateSignUp() {}
   errorMessage = '';
   hide = true;
@@ -52,7 +52,7 @@ export class LoginComponent {
     return this.email.valid && this.password.valid;
   }
   displayStyles = (input: FormControl) => {
-    const styles: Object = {
+    const styles: object = {
       background: input.valid ? 'green' : 'red',
       color: 'white',
     };
@@ -78,7 +78,7 @@ export class LoginComponent {
   }
 
   async valid_user(): Promise<boolean> {
-    let user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
     if (user.token) {
       try {
         await this.http
