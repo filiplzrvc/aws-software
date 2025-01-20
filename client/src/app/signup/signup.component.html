@@ -1,0 +1,132 @@
+<div class="container">
+  <mat-stepper #stepper>
+    <mat-step [stepControl]="user" errorMessage="User details are required">
+      <form [formGroup]="user">
+        <ng-template matStepLabel>User</ng-template>
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required type="email" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            required
+            [type]="hidePassword ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{
+              hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Confirm password</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            required
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hideConfirmPassword = !hideConfirmPassword"
+            [attr.aria-pressed]="hideConfirmPassword"
+          >
+            <mat-icon>{{
+              hideConfirmPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious routerLink="/" type="button">
+            Back
+          </button>
+          <button mat-button matStepperNext color="primary">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="name" errorMessage="Company name is required.">
+      <form [formGroup]="name">
+        <ng-template matStepLabel>Company</ng-template>
+        <mat-form-field>
+          <mat-label>Company name</mat-label>
+          <input matInput formControlName="company" readonly />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext color="primary">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="address" optional>
+      <form [formGroup]="address">
+        <ng-template matStepLabel>Address</ng-template>
+        <div>
+          <mat-form-field class="full-width">
+            <mat-label>Street</mat-label>
+            <input
+              matInput
+              placeholder="Ex. 1 Main St"
+              formControlName="street"
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>City</mat-label>
+            <input
+              matInput
+              placeholder="New York, London,..."
+              formControlName="city"
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Postcode</mat-label>
+            <input
+              matInput
+              placeholder="1020"
+              formControlName="postcode"
+              type="number"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext color="primary">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p
+        [ngStyle]="{ color: isSignUpValid() ? 'green' : 'red', margin: '10px' }"
+      >
+        {{
+          isSignUpValid()
+            ? "All inputs completed. Proceed to finish."
+            : "Please fill out all inputs before proceeding."
+        }}
+      </p>
+      <ng-template #content>content here...</ng-template>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!isSignUpValid()"
+          (click)="signUp()"
+          type="submit"
+        >
+          Sign Up
+        </button>
+      </div>
+      <p style="color: red; margin: 10px">{{ errorMessage }}</p>
+    </mat-step>
+  </mat-stepper>
+</div>

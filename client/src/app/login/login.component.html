@@ -1,0 +1,60 @@
+<div class="container">
+  <form class="example-form">
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        [formControl]="email"
+        placeholder="Ex. pat@example.com"
+      />
+
+      @if (email.hasError('email') && !email.hasError('required')) {
+      <mat-error>Please enter a valid email address</mat-error>
+      } @if (email.hasError('required')) {
+      <mat-error>Email is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        [type]="hide ? 'password' : 'text'"
+        matInput
+        [formControl]="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-pressed]="hide"
+        type="button"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+
+      @if (password.hasError('required')) {
+      <mat-error>password is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <p style="color: red">{{ errorMessage }}</p>
+
+    <div class="signUpFooter">
+      <button
+        [disabled]="!validForm()"
+        mat-raised-button
+        class="login-button mat-primary"
+        (click)="login()"
+      >
+        Login
+      </button>
+      <a
+        routerLink="/signup"
+        type="button"
+        class="signupButton"
+      >
+        Dont't have an Account yet?
+      </a>
+    </div>
+  </form>
+</div>

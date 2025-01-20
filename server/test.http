@@ -1,0 +1,28 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+"username": "vamos@gmail.com",
+"password": "1232434323"
+}
+###
+POST http://localhost:3000/sessions
+Content-Type: application/json
+
+{
+"username": "dsdasda@test.at",
+"password": "12345678"
+}
+###
+POST http://localhost:3000/highscore
+Content-Type: application/json
+
+{
+"username": "test@test.at",
+"score": "443"
+}
+###
+GET http://localhost:3000/highscore
+
+###
+DELETE http://localhost:3000/sessions/312312321

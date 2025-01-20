@@ -1,0 +1,72 @@
+<div class="container">
+  <form [formGroup]="highscore">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>add_circle</mat-icon>
+          <span style="margin-left: 5px">Add</span>
+        </ng-template>
+        <div class="example-container content">
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" readonly />
+          </mat-form-field>
+          <mat-form-field floatLabel="always">
+            <mat-label>Highscore</mat-label>
+            <input
+              matInput
+              type="number"
+              class="example-right-align"
+              placeholder="0"
+              formControlName="score"
+              required
+            />
+            <span matTextPrefix>+&nbsp;</span>
+          </mat-form-field>
+          <div>
+            <button
+              mat-raised-button
+              class="mat-primary"
+              [disabled]="!highscore.valid"
+              (click)="addHighscore()"
+              type="submit"
+            >
+              Add Highscore
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Highscores">
+        <ng-template mat-tab-label>
+          <mat-icon>auto_awesome_motion</mat-icon>
+          <span style="margin-left: 5px">Highscores</span>
+        </ng-template>
+        <div class="content">
+          <table matSort (matSortChange)="sortData($event)">
+            <tr>
+              <th mat-sort-header="score">Highscore</th>
+              <th mat-sort-header="username">Username</th>
+            </tr>
+
+            <tr *ngFor="let score of sortedData; let i = index">
+              <td>{{ score.score }}</td>
+              <td>{{ score.username }}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>settings</mat-icon>
+          <span style="margin-left: 5px">Settings</span>
+        </ng-template>
+        <div class="content">
+          <button mat-raised-button class="mat-warn" (click)="logout()">
+            Logout
+          </button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </form>
+</div>
