@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormControl,
   Validators,
   FormsModule,
   FormBuilder,
@@ -140,7 +139,7 @@ export class SignupComponent implements OnInit {
           .post(this.authenticate_url, { token: user.token })
           .toPromise();
         return true;
-      } catch (error) {
+      } catch{
         return false;
       }
     } else {
@@ -149,12 +148,10 @@ export class SignupComponent implements OnInit {
   }
 
   async ngOnInit() {
-    try {
-      const valid = await this.valid_user();
-      if (valid) {
-        this.router.navigate(['/']);
-        return;
-      }
-    } catch (error) {}
+    const valid = await this.valid_user();
+    if (valid) {
+      this.router.navigate(['/']);
+      return;
+    }
   }
 }

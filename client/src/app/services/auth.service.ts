@@ -13,7 +13,7 @@ export class AuthService {
       try {
         await this.http.post(this.authenticate_url, { token: user.token });
         return true;
-      } catch (error) {
+      } catch{
         return false;
       }
     } else {

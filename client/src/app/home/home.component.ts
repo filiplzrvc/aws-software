@@ -72,22 +72,18 @@ export class HomeComponent implements OnInit {
   }
 
   async getHighScores() {
-    try {
-      const response = await this.http.get(this.highscore_url).toPromise();
-      if (response) {
-        this.highscores = response as HighScore[];
-        this.cdr.detectChanges();
-      }
-    } catch (error) {}
+    const response = await this.http.get(this.highscore_url).toPromise();
+    if (response) {
+      this.highscores = response as HighScore[];
+      this.cdr.detectChanges();
+    }
   }
 
   async logout() {
-    try {
-      const url = `${this.signout_url}/${this.user.token}`;
-      await this.http.delete(url);
-      sessionStorage.removeItem('user');
-      this.router.navigate(['/login']);
-    } catch (error) {}
+    const url = `${this.signout_url}/${this.user.token}`;
+    await this.http.delete(url);
+    sessionStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 
   async addHighscore() {
@@ -96,9 +92,7 @@ export class HomeComponent implements OnInit {
       username: this.highscore.get('username')?.value ?? '',
       score: this.highscore.get('score')?.value ?? '',
     };
-    try {
-      await this.http.post(this.highscore_url, body).toPromise();
-    } catch (error) {}
+    await this.http.post(this.highscore_url, body).toPromise();
   }
 
   async valid_user(): Promise<boolean> {
@@ -109,7 +103,7 @@ export class HomeComponent implements OnInit {
           .post(this.authenticate_url, { token: user.token })
           .toPromise();
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     } else {
@@ -118,15 +112,13 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
-    try {
-      const valid = await this.valid_user();
-      if (!valid) {
-        this.router.navigate(['/login']);
-        return;
-      }
-      await this.getHighScores();
-      this.sortedData = this.highscores.slice();
-    } catch (error) {}
+    const valid = await this.valid_user();
+    if (!valid) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    await this.getHighScores();
+    this.sortedData = this.highscores.slice();
   }
 
   sortData(sort: Sort) {

@@ -39,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   navigateSignUp() {}
   errorMessage = '';
   hide = true;
@@ -85,7 +86,7 @@ export class LoginComponent implements OnInit {
           .post(this.authenticate_url, { token: user.token })
           .toPromise();
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     } else {
@@ -94,12 +95,10 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
-    try {
-      const valid = await this.valid_user();
-      if (valid) {
-        this.router.navigate(['/']);
-        return;
-      }
-    } catch (error) {}
+    const valid = await this.valid_user();
+    if (valid) {
+      this.router.navigate(['/']);
+      return;
+    }
   }
 }
